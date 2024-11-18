@@ -132,48 +132,10 @@ def generate_counter_svg(commit_count):
 </svg>"""
 
 
-def generate_jackpot_svg():
-    return """<svg width="250" height="70" viewBox="0 0 250 70" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <style>
-      .label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 700; fill: #8892b0; letter-spacing: 1.5px; }
-      .arm { transform-origin: 220px 45px; animation: pull 1s ease-in-out forwards; }
-      @keyframes pull { 0% { transform: rotate(0deg); } 50% { transform: rotate(100deg); } 100% { transform: rotate(0deg); } }
-      .coin { animation: dropIn 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; }
-      .coin-1 { animation-delay: 1.2s; } .coin-2 { animation-delay: 1.7s; } .coin-3 { animation-delay: 2.2s; }
-      @keyframes dropIn { 0% { transform: translateY(-50px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(0); opacity: 1; } }
-      .glow { animation: coinGlow 1.5s infinite alternate; }
-      @keyframes coinGlow { 0% { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5)); } 100% { filter: drop-shadow(0 0 15px rgba(255, 215, 0, 1)); } }
-    </style>
-    <clipPath id="mask"><rect x="0" y="20" width="220" height="50" rx="8" /></clipPath>
-    <linearGradient id="boxBg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#0a1128" /><stop offset="100%" stop-color="#050505" /></linearGradient>
-    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFDF00" /><stop offset="100%" stop-color="#D4AF37" /></linearGradient>
-  </defs>
-  <g class="arm"><rect x="220" y="10" width="6" height="35" fill="#8892b0" rx="3" /><circle cx="223" cy="10" r="8" fill="#ff007a" /></g>
-  <rect x="218" y="40" width="10" height="15" fill="#444a5e" rx="2" />
-  <rect x="0" y="20" width="220" height="50" fill="url(#boxBg)" rx="8" stroke="#1d2847" stroke-width="2" />
-  <text x="15" y="51" class="label">JACKPOT</text>
-  <g clip-path="url(#mask)"><g class="glow">
-    <g transform="translate(105, 45)"><g class="coin coin-1"><circle r="15" fill="url(#gold)" stroke="#B8860B" stroke-width="2" /><text y="5" font-family="sans-serif" font-size="16" font-weight="bold" fill="#B8860B" text-anchor="middle">$</text></g></g>
-    <g transform="translate(150, 45)"><g class="coin coin-2"><circle r="15" fill="url(#gold)" stroke="#B8860B" stroke-width="2" /><text y="5" font-family="sans-serif" font-size="16" font-weight="bold" fill="#B8860B" text-anchor="middle">$</text></g></g>
-    <g transform="translate(195, 45)"><g class="coin coin-3"><circle r="15" fill="url(#gold)" stroke="#B8860B" stroke-width="2" /><text y="5" font-family="sans-serif" font-size="16" font-weight="bold" fill="#B8860B" text-anchor="middle">$</text></g></g>
-  </g></g>
-</svg>"""
-
-
-def jackpot_selected():
-    chance = float(os.environ.get("JACKPOT_CHANCE", "0.03"))
-    if not 0 <= chance <= 0.05:
-        raise RuntimeError("JACKPOT_CHANCE must be between 0 and 0.05.")
-    return random.SystemRandom().random() < chance
-
-
-def update_profile(commit_count, is_jackpot=None):
+def update_profile(commit_count):
     svg_path = PROFILE_DIR / "animated-slot-counter.svg"
     readme_path = PROFILE_DIR / "README.md"
-    if is_jackpot is None:
-        is_jackpot = jackpot_selected()
-    counter_svg = generate_jackpot_svg() if is_jackpot else generate_counter_svg(commit_count)
+    counter_svg = generate_counter_svg(commit_count)
 
     old_svg = svg_path.read_text(encoding="utf-8") if svg_path.exists() else ""
     if old_svg == counter_svg:
@@ -189,8 +151,7 @@ def update_profile(commit_count, is_jackpot=None):
         readme,
     )
     readme_path.write_text(readme, encoding="utf-8")
-    state = "jackpot" if is_jackpot else f"{commit_count} commits"
-    print(f"Updated profile with {state}.")
+    print(f"Updated profile with {commit_count} commits.")
     return True
 
 

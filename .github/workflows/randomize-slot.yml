@@ -29,7 +29,6 @@ jobs:
           COUNTER_BASE_COUNT: "23236"
           COUNTER_BASE_DATE: "2026-08-12"
           COUNTER_TIMEZONE: "Europe/Berlin"
-          JACKPOT_CHANCE: "0.03"
         run: python profile/update_slot.py
 
       - name: Commit and push changes
