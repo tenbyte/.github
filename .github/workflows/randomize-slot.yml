@@ -1,0 +1,46 @@
+name: Update profile glitch counter
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: profile-glitch-counter
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out profile repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      - name: Generate synthetic commit counter
+        env:
+          COUNTER_BASE_COUNT: "23236"
+          COUNTER_BASE_DATE: "2026-08-12"
+          COUNTER_TIMEZONE: "Europe/Berlin"
+          JACKPOT_CHANCE: "0.03"
+        run: python profile/update_slot.py
+
+      - name: Commit and push changes
+        run: |
+          git add profile/animated-slot-counter.svg profile/README.md
+          if git diff --cached --quiet; then
+            echo "Profile is already current."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: update profile glitch counter"
+          git pull --rebase
+          git push

@@ -1,0 +1,150 @@
+<svg width="100%" height="250" viewBox="0 0 1000 250" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background color -->
+    <rect id="bg" class="background" width="100%" height="100%" />
+    
+    <!-- Grid Pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path class="grid-line" d="M 40 0 L 0 0 0 40" fill="none" stroke-width="1.5" />
+    </pattern>
+    
+    <!-- Edge Fade Mask -->
+    <filter id="fadeBlur" x="-10%" y="-20%" width="120%" height="140%">
+      <feGaussianBlur stdDeviation="25" />
+    </filter>
+    <mask id="edgeMask">
+      <rect width="100%" height="100%" fill="black" />
+      <rect x="30" y="30" width="940" height="190" fill="white" filter="url(#fadeBlur)" />
+    </mask>
+
+    <!-- Soft alpha window that reveals the blue swoosh copy of the wordmark. -->
+    <linearGradient id="swooshMaskGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0" />
+      <stop offset="12%" stop-color="#ffffff" stop-opacity="0" />
+      <stop offset="26%" stop-color="#ffffff" stop-opacity="0.08" />
+      <stop offset="34%" stop-color="#ffffff" stop-opacity="0.32" />
+      <stop offset="42%" stop-color="#ffffff" stop-opacity="0.90" />
+      <stop offset="58%" stop-color="#ffffff" stop-opacity="0.90" />
+      <stop offset="66%" stop-color="#ffffff" stop-opacity="0.32" />
+      <stop offset="74%" stop-color="#ffffff" stop-opacity="0.08" />
+      <stop offset="88%" stop-color="#ffffff" stop-opacity="0" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+    <filter id="swooshMaskBlur" x="-20%" y="-30%" width="140%" height="160%">
+      <feGaussianBlur stdDeviation="90" />
+    </filter>
+    <mask id="swooshMask" maskUnits="userSpaceOnUse" x="-1500" y="-400" width="8000" height="1900" style="mask-type: alpha;">
+      <g transform="skewX(-18)">
+        <rect class="logo-shine" x="-1600" y="-300" width="1600" height="1700" fill="url(#swooshMaskGradient)" filter="url(#swooshMaskBlur)" />
+      </g>
+    </mask>
+    <filter id="swooshGlow" x="-20%" y="-50%" width="140%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="32" result="blur" />
+      <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+    </filter>
+    
+    <style>
+      .background { fill: #0d1117; }
+      .grid-line { stroke: #30363d; }
+      .block { fill: #007aff; opacity: 0; animation: fade 4s infinite alternate; }
+      .block2 { fill: #00d2ff; opacity: 0; animation: fade 3s infinite alternate; }
+      .block3 { fill: #ffffff; opacity: 0; animation: fade 5s infinite alternate; }
+      
+      @keyframes fade {
+        0%, 100% { opacity: 0; }
+        50% { opacity: 0.15; }
+      }
+
+      /* Logo styles */
+      .logo-base {
+        --mark-color: #007aff;
+        --word-color: #ffffff;
+      }
+      .cls-1 {
+        fill: var(--mark-color, #007aff);
+        animation: logoGlow 3.5s ease-in-out infinite alternate;
+      }
+      .cls-2 {
+        fill: var(--word-color, #ffffff);
+      }
+      .swoosh-copy {
+        --mark-color: #007aff;
+        --word-color: #007aff;
+        filter: url(#swooshGlow);
+      }
+
+      .logo-shine {
+        animation: shineSweep 5s linear infinite;
+      }
+
+      @keyframes logoGlow {
+        0% { filter: drop-shadow(0 0 8px rgba(0, 122, 255, 0.28)); }
+        100% { filter: drop-shadow(0 0 26px rgba(0, 122, 255, 0.68)); }
+      }
+
+      @keyframes shineSweep {
+        0%, 25% { transform: translateX(0); opacity: 0; }
+        28% { transform: translateX(0); opacity: 1; }
+        52% { transform: translateX(6200px); opacity: 1; }
+        55%, 100% { transform: translateX(6200px); opacity: 0; }
+      }
+
+      @media (prefers-color-scheme: light) {
+        .background { fill: #ffffff; }
+        .grid-line { stroke: #d0d7de; }
+        .block { fill: #0969da; }
+        .block2 { fill: #0284c7; }
+        .block3 { fill: #57606a; }
+        .logo-base {
+          --mark-color: #007aff;
+          --word-color: #0d1117;
+        }
+        .cls-1 {
+          animation-name: logoGlowLight;
+        }
+      }
+
+      @keyframes logoGlowLight {
+        0% { filter: drop-shadow(0 0 8px rgba(9, 105, 218, 0.18)); }
+        100% { filter: drop-shadow(0 0 22px rgba(9, 105, 218, 0.38)); }
+      }
+    </style>
+  </defs>
+
+  <g mask="url(#edgeMask)">
+    <use href="#bg" />
+    <g>
+    <rect width="100%" height="100%" fill="url(#grid)" />
+    
+    <!-- Animated Grid Blocks -->
+    <rect x="80" y="40" width="40" height="40" class="block" style="animation-delay: 0.5s;" />
+    <rect x="240" y="120" width="40" height="40" class="block2" style="animation-delay: 1.2s;" />
+    <rect x="400" y="200" width="40" height="40" class="block" style="animation-delay: 0.1s;" />
+    <rect x="560" y="80" width="40" height="40" class="block3" style="animation-delay: 1.8s;" />
+    <rect x="760" y="40" width="40" height="40" class="block2" style="animation-delay: 0.9s;" />
+    <rect x="880" y="160" width="40" height="40" class="block" style="animation-delay: 0.3s;" />
+    <rect x="120" y="200" width="40" height="40" class="block3" style="animation-delay: 1.5s;" />
+    <rect x="720" y="200" width="40" height="40" class="block" style="animation-delay: 2.1s;" />
+  </g>
+
+  <!-- Center Logo -->
+  <g transform="translate(272, 71) scale(0.104)">
+    <defs>
+    <g id="logoGeometry">
+      <path class="cls-2" d="M685.5,268.7v268.8l94.8,95.7,94.7,95.8h257.5v-169h-187.5l-34.8-34.8-34.7-34.7.2-77.5.3-77.5,128.3-.3,128.2-.2v-167h-257V0h-190v268.7Z"/>
+      <path class="cls-1" d="M74.1,75L0,148.9l108,108.1,108,108-106.8,106.8L2.5,578.5l75,75,75,75,180.5-180.6c99.3-99.3,180.5-181.2,180.5-181.9,0-1.4-362.9-365-364.3-365s-34.3,33.3-75.1,74h0Z"/>
+      <path class="cls-2" d="M2314.5,368.1v367.2l133.1-.5,133.2-.6,89.3-89.3,89.4-89.4V173.5l-127.7-.2-127.8-.3-.3-86-.2-86h-189v367.1ZM2569.3,418.5l.2,77-33,33-33,33,.2-109.5.3-109.5,18.5-.5c10.2-.3,24.8-.5,32.5-.5h14l.3,77Z"/>
+      <path class="cls-2" d="M3381.5,280.8v274.7l89.3,89.3,89.2,89.2h269.5v-168h-187.5l-34.8-34.8-34.7-34.7v-155.5h257v-168h-256.5l-.3-83.5-.2-83.5h-191v274.8Z"/>
+      <path class="cls-2" d="M1272.2,256.8l-88.7,88.7v383.5h505l-.2-84.3-.3-84.2-65.2-.3c-35.9,0-65.3-.6-65.3-1s29.5-30.2,65.5-66.2l65.5-65.5V168h-327.5l-88.8,88.8ZM1497.3,352l.3,16.4-60.8,60.8c-33.4,33.4-61.1,60.8-61.5,60.8s-.8-19.2-.8-42.8v-42.7l34.8-34.8,34.8-34.7,26.5.2,26.4.3.3,16.5h0Z"/>
+      <path class="cls-2" d="M1751.5,448.5v280.5h191v-394h53.2l34.9,35.2,34.8,35.3v161.8c.1,0,.1,161.7.1,161.7l95.3-.2,95.2-.3.3-191,.2-191-89.2-89.2-89.3-89.3h-326.5v280.5Z"/>
+      <path class="cls-2" d="M2818.2,173.7c-.4.3-.7,86.6-.7,191.7v191.1l88.8,88.8,88.7,88.7h135.5v63.5l-34.2,34.2-34.3,34.3h-244.5v169h324.5l89.8-89.8,89.7-89.7-.2-341-.3-341h-190l-.3,196.2-.2,196.3h-53.5l-34.8-34.8-34.7-34.7V173h-94.3c-51.9,0-94.7.3-95,.7Z"/>
+      <path class="cls-2" d="M3969.8,262.2l-89.3,89.3v382.5h506v-168h-66c-36.3,0-66-.3-66-.8s29.7-30.4,66-66.7l66-66-.2-129.5-.3-129.5-163.5-.3-163.5-.2-89.2,89.2ZM4194.5,357.7v16.8l-60.7,60.7c-33.5,33.5-61.1,60.8-61.5,60.8s-.8-19.2-.8-42.7v-42.8l34.7-34.7,34.8-34.8h53.5v16.7h0Z"/>
+    </g>
+    </defs>
+    <use class="logo-base" href="#logoGeometry" />
+    <g mask="url(#swooshMask)" pointer-events="none">
+      <use class="swoosh-copy" href="#logoGeometry" />
+    </g>
+    </g>
+  </g>
+</svg>
