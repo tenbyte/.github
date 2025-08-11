@@ -94,5 +94,5 @@ We combine clean architecture, proven best practices, and pragmatic delivery. Ou
 ---
 
 <p align="center">
-  <sub>© Tenbyte Technologies GmbH • Software. IT Services. Consulting.</sub>
+  <sub>© Tenbyte Technologies GmbH • Crafted with &#9829; in Munich &#x1F968; </sub>
 </p>
