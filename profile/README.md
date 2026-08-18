@@ -6,7 +6,7 @@
 
 <br/>
 
-<img src="animated-slot-counter.svg?v=9043d1efa80e" alt="Commit Counter" height="90" />
+<img src="animated-slot-counter.svg?v=b7d58d3e72d0" alt="Commit Counter" height="90" />
 
 <br/>
 <br/>
